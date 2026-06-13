@@ -1,0 +1,62 @@
+# Numerical Integration – Approximate ∫ f(x) dx from a to b
+# Methods: LRM (Left Riemann), RRM (Right Riemann), MPM (Midpoint), TM (Trapezoid)
+# Fixed number of subintervals: n = 1000. Supports pi expressions (e.g., pi/2).
+
+INPUT
+    Get a_str from user              # left endpoint as string, e.g., "0", "pi/2"
+    Get b_str from user              # right endpoint as string
+    Get f_x from user                # function as string, using variable x
+    Get method from user             # "LRM", "RRM", "MPM", or "TM"
+
+PROCESS
+    # Convert a_str to numeric a (allow fractions of pi)
+    IF "pi" IN a_str THEN
+        a ← evaluate a_str with "pi" replaced by "math.pi"
+    ELSE
+        a ← float(a_str)
+    END IF
+
+    # Convert b_str to numeric b similarly
+    IF "pi" IN b_str THEN
+        b ← evaluate b_str with "pi" replaced by "math.pi"
+    ELSE
+        b ← float(b_str)
+    END IF
+
+    area ← 0.0
+    n ← 1000
+    h ← (b - a) / n
+    shift ← 0
+    constant ← 0.0
+
+    IF method = "RRM" THEN
+        shift ← 1
+    ELIF method = "MPM" THEN
+        constant ← h / 2
+    END IF
+
+    IF method = "TM" THEN
+        # Trapezoid method
+        FOR i FROM 0 TO n
+            xi ← a + i × h
+            x ← xi
+            height ← evaluate f_x    # f_x is an expression using x
+            IF i = 0 OR i = n THEN
+                area ← area + height
+            ELSE
+                area ← area + 2 × height
+            END IF
+        END FOR
+        area ← area × h / 2
+    ELSE
+        # Rectangle methods (LRM, RRM, MPM)
+        FOR i FROM shift TO n + shift - 1
+            xi ← a + i × h + constant
+            x ← xi
+            height ← evaluate f_x
+            area ← area + height × h
+        END FOR
+    END IF
+
+OUTPUT
+    Display "The integration of " + f_x + " is " + area rounded to 3 decimals
