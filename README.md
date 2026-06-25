@@ -48,6 +48,24 @@ Files:
 Methods: LRM, RRM, MPM, TM  
 Output: Approximate integral (3 decimal places).
 
+## CW09 — Spanish Verb Conjugator
+
+**Folder:** `Classwork-09-Spanish-Verb-Conjugator/`
+
+**Files:**
+- `spanish_verb_conjugator.py` – Conjugates regular Spanish verbs (-ar, -er, -ir) in present tense.
+- `PPP.txt` – Pseudocode following UPY style.
+- `Flowchart.png` – Flowchart showing iteration flow.
+
+**Features:** Supports Yo, Tú, El, Nosotros, Vosotros, Ellos pronouns.
+**Example output:**
+Write a spanish verb (ar/er/ir): hablar
+Yo hablo
+Tú hablas
+El habla
+Nosotros hablamos
+Vosotros hablais
+Ellos hablan
 AI Declaration
 
 Student: Gabriel Enrique Rojas Velázquez

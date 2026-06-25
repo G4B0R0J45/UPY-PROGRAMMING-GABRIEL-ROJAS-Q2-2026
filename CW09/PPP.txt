@@ -1,0 +1,36 @@
+
+# Spanish Verb Conjugator – Presente de Indicativo
+# Conjugates regular -ar, -er, -ir verbs in the present tense
+# Pronouns: Yo, Tú, El, Nosotros, Vosotros, Ellos
+
+INPUT
+    Get verb from user          # string, e.g., "hablar", "comer", "vivir"
+
+PROCESS
+    # Define pronoun list and conjugation endings for each verb type
+    pronouns ← ["Yo", "Tú", "El", "Nosotros", "Vosotros", "Ellos"]
+    
+    endings["ar"] ← ["o", "as", "a", "amos", "ais", "an"]
+    endings["er"] ← ["o", "es", "e", "emos", "eis", "en"]
+    endings["ir"] ← ["o", "es", "e", "imos", "is", "en"]
+    
+    # Extract the stem (all characters except last two)
+    stem ← verb without last two characters
+    ending ← last two characters of verb
+    
+    # Get the list of endings for the specific verb type
+    conjugations ← endings[ending]
+    
+    # Loop over each pronoun and its corresponding ending
+    FOR i FROM 0 TO 5
+        pronoun ← pronouns[i]
+        termination ← conjugations[i]
+        
+        # Build the conjugated form
+        conjugated_form ← stem + termination
+        
+        Display pronoun + " " + conjugated_form
+    END FOR
+
+OUTPUT
+    # Display is done inside the loop (each conjugation printed)
