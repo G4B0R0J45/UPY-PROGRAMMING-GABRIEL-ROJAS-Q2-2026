@@ -1,0 +1,147 @@
+# School Management System – Login and Role-based Menus
+# Roles: student (view grades), professor (edit grades, loop until empty), coordinator (view all)
+
+INPUT
+    logged_in ← False
+    
+    WHILE logged_in = False
+        Get username from user
+        Get password from user
+        
+        IF username exists in users AND users[username]["password"] = password THEN
+            logged_in ← True
+            role ← users[username]["rol"]
+            name ← users[username]["name"]
+        ELSE
+            Display "Invalid credentials. Please try again."
+        END IF
+    END WHILE
+
+PROCESS
+    Display "Bienvenido!, " + name + " (" + role + ")"
+    
+    # Student menu – view only approved subjects
+    IF role = "student" THEN
+        Display "School Report"
+        Display "---"
+        
+        approved ← empty set
+        FOR each subject in subjects
+            IF notes[username][subject] >= 8.0 THEN
+                Add subject to approved
+            END IF
+        END FOR
+        
+        pending ← set(subjects) - approved
+        
+        FOR each subject in subjects
+            IF subject is in approved THEN
+                grade ← notes[username][subject]
+                Display subject + ": " + grade
+            END IF
+        END FOR
+        
+        Display "Approved: " + approved
+        Display "Pending: " + pending
+    
+    # Professor menu – loop until empty username
+    ELIF role = "professor" THEN
+        WHILE True
+            Display "======================="
+            Display "Students"
+            Display "======================="
+            
+            FOR each user in users
+                IF users[user]["rol"] = "student" THEN
+                    Display "User: " + user + " | Student: " + users[user]["name"]
+                END IF
+            END FOR
+            
+            Get student_username from user
+            
+            IF student_username = "" THEN
+                EXIT WHILE
+            END IF
+            
+            IF student_username exists in notes THEN
+                Display "======================="
+                Display "Subjects"
+                Display "======================="
+                
+                FOR each subject in subjects
+                    Display subject
+                END FOR
+                
+                Get subject from user
+                
+                IF subject exists in subjects THEN
+                    current_grade ← notes[student_username][subject]
+                    Get new_grade from user
+                    Get confirmation from user
+                    
+                    Display subject + ": " + current_grade + " ==> " + new_grade
+                    
+                    IF confirmation = "yes" THEN
+                        notes[student_username][subject] ← new_grade
+                        Display "Grade updated!"
+                        Display notes[student_username]
+                    ELSE
+                        Display "Write other thing to exit"
+                    END IF
+                ELSE
+                    Display "Invalid subject."
+                END IF
+            ELSE
+                Display "Invalid student username."
+            END IF
+        END WHILE
+    
+    # Coordinator menu – read-only reports
+    ELIF role = "coordinator" THEN
+        Display "==================="
+        Display " Professors"
+        Display "==================="
+        
+        FOR each user in users
+            IF users[user]["rol"] = "professor" THEN
+                Display "User: " + user + " | Professor: " + users[user]["name"]
+            END IF
+        END FOR
+        
+        Display "==================="
+        Display " Students"
+        Display "==================="
+        
+        FOR each user in users
+            IF users[user]["rol"] = "student" THEN
+                Display "User: " + user + "    | Student: " + users[user]["name"]
+            END IF
+        END FOR
+        
+        Display "==================="
+        Display " Records"
+        Display "==================="
+        
+        # Print header row
+        Display "    SUBJECTS    | "
+        FOR each student in notes
+            Display student + "    | "
+        END FOR
+        Display newline
+        
+        # Print separator
+        Display "---"
+        
+        # Print each subject row
+        FOR each subject in subjects
+            Display subject abbreviation + "    | "
+            FOR each student in notes
+                grade ← notes[student][subject]
+                Display grade + "    | "
+            END FOR
+            Display newline
+        END FOR
+    END IF
+
+OUTPUT
+    Display "Goodbye!"
