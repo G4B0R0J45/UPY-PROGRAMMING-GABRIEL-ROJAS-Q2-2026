@@ -68,6 +68,20 @@ Vosotros hablais
 Ellos hablan
 AI Declaration
 
+## CW10 — School Management System
+
+**Folder:** `Classwork-10-School-Management-System/`
+
+**Files:**
+- `school_management_system.py` – Simulates a school login system with three roles: student (view grades), professor (edit grades, loop until empty username), coordinator (view all).
+- `PPP.txt` – Pseudocode following UPY style.
+- `Flowchart.png` – Flowchart showing login, role-based menus, and professor loop.
+
+**Roles:**
+- **Student** – Views only approved subjects (grades ≥ 8.0) with approved/pending sets.
+- **Professor** – Views students and subjects, updates grades (loops until empty username).
+- **Coordinator** – Views professors, students, and complete records table.
+
 Student: Gabriel Enrique Rojas Velázquez
 AI used: DeepSeek (Anthropic)
 Dates: 2026-05-15 to 2026-06-12
