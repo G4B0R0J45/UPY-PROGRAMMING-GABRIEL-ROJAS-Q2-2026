@@ -1,0 +1,52 @@
+# Mandelbrot Set Visualization – Reads CSV, maps iterations to brightness, saves PNG
+
+INPUT
+    # Read configuration file
+    config ← empty dictionary
+    Open "config.txt" for reading
+    FOR each line in file
+        parameter, value ← line.strip().split("=")
+        config[parameter] ← float(value) if "." in value else int(value)
+    END FOR
+    Close file
+    
+    # Read CSV data
+    Open "mandelbrot.csv" for reading
+    lines ← all lines from file
+    Close file
+    
+    # Remove header row
+    Remove first line from lines
+    
+    max_iter ← config["max_iter"]
+    width ← config["ancho"]
+    height ← config["alto"]
+
+PROCESS
+    # Create image (HSV mode)
+    img ← new Image("HSV", width, height)
+    
+    FOR each line in lines
+        row, column, iterations ← line.strip().split(",")
+        row ← int(row)
+        column ← int(column)
+        iterations ← int(iterations)
+        
+        # Map iterations to brightness
+        IF iterations = max_iter THEN
+            brightness ← 0
+        ELSE
+            brightness ← (iterations / max_iter) × 255
+            brightness ← int(brightness)
+        END IF
+        
+        # Set pixel color (Hue=brilliance, Saturation=255, Value=255)
+        img.putpixel((column, row), (brightness, 255, 255))
+    END FOR
+    
+    # Convert to RGB and save
+    img_rgb ← img.convert("RGB")
+    img_rgb.save("mandelbrot.png")
+
+OUTPUT
+    Display "DONE"
