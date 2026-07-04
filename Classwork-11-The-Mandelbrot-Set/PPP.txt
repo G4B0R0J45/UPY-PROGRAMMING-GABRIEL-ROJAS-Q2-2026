@@ -1,0 +1,49 @@
+# Mandelbrot Set Computation – Reads config, iterates per pixel, saves CSV
+
+INPUT
+    config ← empty dictionary
+    Open "config.txt" for reading
+    
+    FOR each line in file
+        Remove whitespace from line
+        Split line at "="
+        key ← left part
+        value ← right part converted to number
+        config[key] ← value
+    END FOR
+    Close file
+    
+    width ← config["ancho"] as integer
+    height ← config["alto"] as integer
+    max_iter ← config["max_iter"] as integer
+
+PROCESS
+    Open "mandelbrot.csv" for writing
+    Write "row,column,iterations\n"   # header
+    
+    FOR row FROM 0 TO height - 1
+        FOR col FROM 0 TO width - 1
+            # Map pixel to complex number
+            real ← config["real_min"] + (col / width) × (config["real_max"] - config["real_min"])
+            imag ← config["imag_min"] + (row / height) × (config["imag_max"] - config["imag_min"])
+            c ← complex(real, imag)
+            
+            # Iterate z = z² + c
+            z ← 0 + 0j
+            iterations ← 0
+            
+            WHILE |z| ≤ 2 AND iterations < max_iter
+                z ← z² + c
+                iterations ← iterations + 1
+            END WHILE
+            
+            Write row + "," + col + "," + iterations + "\n"
+        END FOR
+    END FOR
+    
+    Close CSV file
+
+OUTPUT
+    Display "Done!"
+
+
