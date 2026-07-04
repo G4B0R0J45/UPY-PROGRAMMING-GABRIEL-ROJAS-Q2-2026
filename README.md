@@ -82,6 +82,25 @@ AI Declaration
 - **Professor** – Views students and subjects, updates grades (loops until empty username).
 - **Coordinator** – Views professors, students, and complete records table.
 
+## CW11 — The Mandelbrot Set
+
+**Folder:** `Classwork-11-The-Mandelbrot-Set/`
+
+**Files:**
+- `mandelbrot_set_math.py` – Computes the Mandelbrot set by reading `config.txt`, iterating per pixel, and saving results to `mandelbrot.csv`.
+- `PPP.txt` – Pseudocode following UPY style.
+- `Flowchart.png` – Flowchart showing the iteration and decision flows.
+- `config.txt` – Configuration file with grid parameters (width, height, real/imag ranges, max iterations).
+
+**How it works:**
+1. Reads `config.txt` for grid parameters.
+2. Maps each pixel to a complex number.
+3. Iterates `z = z² + c` until escape or max iterations.
+4. Saves `row, column, iterations` to `mandelbrot.csv`.
+
+**Example output:**
+None
+
 Student: Gabriel Enrique Rojas Velázquez
 AI used: DeepSeek (Anthropic)
 Dates: 2026-05-15 to 2026-06-12
