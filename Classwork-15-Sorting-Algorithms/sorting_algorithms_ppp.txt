@@ -1,166 +1,45 @@
-PPP - PSEUDOCODE PROGRAMMING PROCESS
-Classwork #15 - Sorting Algorithms (Bubble, Insertion, Selection)
-Universidad Politecnica de Yucatan
+# Sorting Algorithms Visualization – Bubble, Insertion, and Selection Sort
+# Generates random numbers, sorts them, and animates the process using stddraw
 
-
-===================================================================
-ROUTINE: bubble_sort(numbers)
-===================================================================
-# INPUT
-    Get numbers from caller                 # list of int, sorted in place
-
-# PROCESS
-    n ← length of numbers                   # int, number of elements
-    FOR sweep ← 0 TO n - 1:
-        FOR pair ← 0 TO n - 2 - sweep:      # last "sweep" items already final
-            IF numbers[pair] > numbers[pair + 1]:
-                Swap numbers[pair] and numbers[pair + 1]
-
-# OUTPUT
-    numbers is now in ascending order       # returned in place
-
-
-===================================================================
-ROUTINE: insertion_sort(numbers)
-===================================================================
-# INPUT
-    Get numbers from caller                 # list of int, sorted in place
-
-# PROCESS
-    n ← length of numbers                   # int, number of elements
-    FOR i ← 1 TO n - 1:
-        key ← numbers[i]                    # int, value being inserted
-        j ← i - 1                           # int, index just left of key
-        WHILE j ≥ 0 AND numbers[j] > key:
-            numbers[j + 1] ← numbers[j]     # shift larger value to the right
-            j ← j - 1
-        numbers[j + 1] ← key                # drop key into its open slot
-
-# OUTPUT
-    numbers is now in ascending order       # returned in place
-
-
-===================================================================
-ROUTINE: selection_sort(numbers)
-===================================================================
-# INPUT
-    Get numbers from caller                 # list of int, sorted in place
-
-# PROCESS
-    n ← length of numbers                   # int, number of elements
-    FOR i ← 0 TO n - 1:
-        min_index ← i                       # int, index of smallest so far
-        FOR j ← i + 1 TO n - 1:
-            IF numbers[j] < numbers[min_index]:
-                min_index ← j
-        Swap numbers[i] and numbers[min_index]
-
-# OUTPUT
-    numbers is now in ascending order       # returned in place
-
-
-===================================================================
-ROUTINE: draw_bars(numbers, selected)
-===================================================================
-# INPUT
-    Get numbers from caller                 # list of int, bar heights
-    Get selected from caller                # tuple of int, indexes to mark
-
-# PROCESS
-    Clear the canvas
-    n ← length of numbers                   # int, number of bars
-    bar_width ← 10.0 / n                     # float, horizontal space per bar
-    FOR i ← 0 TO n - 1:
-        x ← i × bar_width + bar_width / 2    # float, center of bar i
-        IF i is in selected:
-            color ← red
-        ELSE:
-            color ← blue
-        Set pen color to color
-        Draw a filled bar at x with height numbers[i]
-
-# OUTPUT
-    Display the bars on the canvas and pause briefly
-
-
-===================================================================
-ROUTINE: bubble_sort_animated(numbers)
-===================================================================
-# INPUT
-    Get numbers from caller                 # list of int, sorted and drawn
-
-# PROCESS
-    Set the canvas x scale and y scale       # fit all bars on screen
-    n ← length of numbers                   # int, number of elements
-    FOR sweep ← 0 TO n - 1:
-        FOR pair ← 0 TO n - 2 - sweep:
-            Call draw_bars(numbers, mark pair and pair + 1)
-            IF numbers[pair] > numbers[pair + 1]:
-                Swap numbers[pair] and numbers[pair + 1]
-                Call draw_bars(numbers, mark pair and pair + 1)
-
-# OUTPUT
-    Call draw_bars(numbers)                  # final sorted array
-    Keep the window open
-
-
-===================================================================
-ROUTINE: insertion_sort_animated(numbers)
-===================================================================
-# INPUT
-    Get numbers from caller                 # list of int, sorted and drawn
-
-# PROCESS
-    Set the canvas x scale and y scale
-    n ← length of numbers                   # int, number of elements
-    FOR i ← 1 TO n - 1:
-        key ← numbers[i]                    # int, value being inserted
-        j ← i - 1
-        Call draw_bars(numbers, mark i)     # element about to be inserted
-        WHILE j ≥ 0 AND numbers[j] > key:
-            numbers[j + 1] ← numbers[j]
-            j ← j - 1
-            Call draw_bars(numbers, mark j + 1)
-        numbers[j + 1] ← key
-        Call draw_bars(numbers, mark j + 1)
-
-# OUTPUT
-    Call draw_bars(numbers)                  # final sorted array
-    Keep the window open
-
-
-===================================================================
-ROUTINE: selection_sort_animated(numbers)
-===================================================================
-# INPUT
-    Get numbers from caller                 # list of int, sorted and drawn
-
-# PROCESS
-    Set the canvas x scale and y scale
-    n ← length of numbers                   # int, number of elements
-    FOR i ← 0 TO n - 1:
-        min_index ← i
-        FOR j ← i + 1 TO n - 1:
-            Call draw_bars(numbers, mark min_index and j)
-            IF numbers[j] < numbers[min_index]:
-                min_index ← j
-        Swap numbers[i] and numbers[min_index]
-        Call draw_bars(numbers, mark i and min_index)
-
-# OUTPUT
-    Call draw_bars(numbers)                  # final sorted array
-    Keep the window open
-
-
-===================================================================
-MAIN DRIVER
-===================================================================
-# INPUT
-    numbers ← list of 10 random integers between 0 and 100
+INPUT
+    # Generate 10 random integers between 0 and 100
+    numbers ← empty list
+    FOR i FROM 0 TO 9
+        numbers.append(random integer between 0 and 100)
+    END FOR
+    
     Display "Before sorting: " + numbers
 
-# PROCESS
-    Call bubble_sort_animated(numbers)       # or insertion / selection version
+PROCESS
+    # Choose sorting algorithm (currently Bubble Sort)
+    # CONFIG - Set canvas size
+    Set X scale from -0.1 to 10.0
+    Set Y scale from -0.5 to (max(numbers) + 1)
+    
+    n ← length of numbers
+    
+    # Bubble Sort (animated)
+    FOR sweep FROM 0 TO n - 1
+        FOR pair FROM 0 TO n - 2 - sweep
+            # Draw bars before comparison
+            draw_bars(numbers, selected=(pair, pair + 1))
+            
+            IF numbers[pair] > numbers[pair + 1] THEN
+                # Swap adjacent elements
+                temp ← numbers[pair]
+                numbers[pair] ← numbers[pair + 1]
+                numbers[pair + 1] ← temp
+                
+                # Draw bars after swap
+                draw_bars(numbers, selected=(pair, pair + 1))
+            END IF
+        END FOR
+    END FOR
+    
+    # Alternative algorithms (commented out in code)
+    # Insertion Sort (animated)
+    # Selection Sort (animated)
 
-# OUTPUT
-    Display "After sorting:  " + numbers
+OUTPUT
+    Display "After sorting: " + numbers
+    Display visualization on screen
