@@ -123,6 +123,34 @@ None
 **Example output:**
 None
 
+## CW13 — Error Handling (CW07, CW08, CW09 revisited)
+
+**Folder:** `Classwork-13-Error-Handling/`
+
+**Files:**
+- `verifier_digit.py` – CW07 check digit calculator with error handling: validates the rol format and enforces the digit-match business rule with a custom `DigitoApocrifoError` (try/except/else).
+- `numerical_integration.py` – CW08 numerical integration with error handling: validates numeric limits and function syntax, catches `ZeroDivisionError`, and enforces business rules with custom `LimiteInvertidoError` and `MetodoInvalidoError` exceptions.
+- `spanish_verb_conjugator.py` – CW09 verb conjugator with error handling: catches `KeyError` for invalid verb endings and enforces business rules with custom `EspaciosExtraError` and `VerboEnMayusculasError` exceptions.
+
+**Purpose:** Revisit CW07, CW08 and CW09 to add Unit III error handling, distinguishing Python-detected errors (`try`/`except`) from business rules enforced with `raise` and custom exception classes (`try`/`except`/`else`).
+
+**Example output:**
+None
+
+## CW14 — Error Handling (CW10, CW11, CW12 revisited)
+
+**Folder:** `Classwork-14-Error-Handling/`
+
+**Files:**
+- `school_management_system.py` – CW10 school management system with error handling: catches `KeyError` (unknown student/subject) and `ValueError`/`EOFError` on input, and enforces the grade-range business rule with a custom `InvalidGradeError` (try/except/else).
+- `mandelbrot_set_math.py` – CW11 Mandelbrot set generator with error handling: catches `FileNotFoundError`, `ValueError`, `KeyError` and `TypeError` raised by a missing or malformed `config.txt`.
+- `mandelbrot_set_vis.py` – CW12 Mandelbrot visualization with error handling: catches `FileNotFoundError`, `ValueError` and `IndexError` raised by missing files or a `mandelbrot.csv` inconsistent with `config.txt`.
+
+**Purpose:** Revisit CW10, CW11 and CW12 to add Unit III error handling.
+
+**Example output:**
+None
+
 Student: Gabriel Enrique Rojas Velázquez
 AI used: DeepSeek (Anthropic)
 Dates: 2026-05-15 to 2026-06-12
